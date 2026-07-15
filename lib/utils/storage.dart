@@ -1,13 +1,18 @@
-// utils/storage.dart
+import 'package:shared_preferences/shared_preferences.dart';
 
+/// Wraps SharedPreferences for high-score storage.
 class Storage {
-  // Placeholder for persistent storage (high score, settings)
-  Future<int> getHighScore() async {
-    // TODO: implement using shared_preferences
-    return 0;
+  static const _highScoreKey = 'fbu_high_score';
+
+  static late SharedPreferences _prefs;
+
+  static Future<void> init() async {
+    _prefs = await SharedPreferences.getInstance();
   }
 
-  Future<void> setHighScore(int score) async {
-    // TODO: implement
+  static int get highScore => _prefs.getInt(_highScoreKey) ?? 0;
+
+  static Future<void> setHighScore(int value) async {
+    await _prefs.setInt(_highScoreKey, value);
   }
 }
